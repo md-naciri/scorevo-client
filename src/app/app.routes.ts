@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -10,7 +11,8 @@ export const routes: Routes = [
   { 
     path: 'home',
     loadChildren: () => import('./features/home/home.routes')
-      .then(m => m.HOME_ROUTES)
+      .then(m => m.HOME_ROUTES),
+    canActivate: [AuthGuard]
   },
-  { path: '**', redirectTo: 'home' } // Wildcard route for 404
+  { path: '**', redirectTo: 'home' }
 ];
