@@ -1,8 +1,12 @@
-// Colors
-$primary-color: #6a3de8;  
-$background-color: #f8f9fa;
-$card-bg-color: #ffffff;  
-$text-color: #333333;
+// New color palette
+$primary-color: #1E293B;   // Deep Indigo
+$accent-color: #F59E0B;    // Amber Gold
+$secondary-color: #64748B; // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;     // Burgundy
+
+// Manually define darker shades to avoid using darken()
+$accent-color-dark: #E08900;  // Manually darkened version of accent color
 
 .auth-container {
   min-height: 100vh;
@@ -14,7 +18,7 @@ $text-color: #333333;
 }
 
 .auth-card {
-  background-color: $card-bg-color;
+  background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   width: 100%;
@@ -25,6 +29,11 @@ $text-color: #333333;
 .logo-container {
   text-align: center;
   margin-bottom: 32px;
+  
+  img {
+    height: 64px;
+    margin-bottom: 16px;
+  }
 }
 
 .brand-name {
@@ -52,11 +61,21 @@ form {
   font-size: 16px;
   font-weight: 500;
   border-radius: 8px;
+  background-color: $accent-color;
+  color: white;
+  
+  &:hover {
+    background-color: $accent-color-dark;
+  }
+  
+  &:disabled {
+    background-color: rgba($accent-color, 0.6);
+  }
 }
 
 .error-message {
-  background-color: #ffebee;
-  color: #d32f2f;
+  background-color: rgba($alert-color, 0.1);
+  color: $alert-color;
   padding: 12px;
   border-radius: 8px;
   font-size: 14px;
@@ -64,8 +83,8 @@ form {
 }
 
 .success-message {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: rgba(#10B981, 0.1);
+  color: #10B981;
   padding: 12px;
   border-radius: 8px;
   font-size: 14px;
@@ -76,11 +95,11 @@ form {
   margin-top: 24px;
   text-align: center;
   font-size: 15px;
-  color: $text-color;
+  color: $secondary-color;
 }
 
 .auth-link {
-  color: $primary-color;
+  color: $accent-color;
   font-weight: 500;
   text-decoration: none;
   margin-left: 8px;

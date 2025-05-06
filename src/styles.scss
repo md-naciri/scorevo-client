@@ -1,17 +1,61 @@
+// @use '@angular/material' as mat;
+
+// html {
+//   @include mat.theme((
+//     color: (
+//       theme-type: light,
+//       primary: mat.$azure-palette,
+//       tertiary: mat.$blue-palette,
+//     ),
+//     typography: Roboto,
+//     density: 0,
+//   ));
+// }
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// New color palette
+$primary-color: #1E293B;   // Deep Indigo
+$accent-color: #F59E0B;    // Amber Gold
+$secondary-color: #64748B; // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;     // Burgundy
+
+// Use the prebuilt theme
 @use '@angular/material' as mat;
 
-html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+// Global styles
+html, body { 
+  height: 100%; 
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: $background-color;
+  color: $primary-color;
+}
 
+// Custom overrides for our color scheme (applied via CSS instead of Material theming)
+.mat-toolbar.mat-primary {
+  background-color: $primary-color !important;
+  color: white !important;
+}
+
+.mat-mdc-raised-button.mat-accent {
+  background-color: $accent-color !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background-color: $primary-color !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: rgba($primary-color, 0.04) !important;
+}
+
+// Additional styling for error states
+.mat-error {
+  color: $alert-color !important;
+}

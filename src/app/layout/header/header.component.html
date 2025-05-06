@@ -1,1 +1,30 @@
-<p>header works!</p>
+<mat-toolbar color="primary" class="header-toolbar">
+    <div class="header-container">
+      <div class="logo-section">
+        <a routerLink="/home">
+          <img *ngIf="logoUrl" [src]="logoUrl" alt="Scorevo" class="logo-image">
+          <span class="app-name">Scorevo</span>
+        </a>
+      </div>
+      
+      <span class="spacer"></span>
+      
+      <div class="user-section" *ngIf="currentUser">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+          <span class="username">{{ currentUser.username }}</span>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-toolbar>

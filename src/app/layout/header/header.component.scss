@@ -1,0 +1,64 @@
+// New color palette
+$primary-color: #1E293B;  // Deep Indigo
+$accent-color: #F59E0B;    // Amber Gold
+$secondary-color: #64748B; // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;     // Burgundy
+
+.header-toolbar {
+  background-color: $primary-color;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .logo-image {
+    height: 32px;
+    margin-right: 12px;
+  }
+  
+  .app-name {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-section {
+  .user-menu-button {
+    display: flex;
+    align-items: center;
+    
+    .username {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Style for highlighting active route
+.active-link {
+  color: $accent-color;
+  font-weight: 500;
+}
