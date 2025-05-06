@@ -6,8 +6,8 @@ $background-color: #F8FAFC; // Light Stone
 $alert-color: #B91C1C;     // Burgundy
 
 .header-toolbar {
-  background-color: $primary-color;
-  color: white;
+  background-color: $primary-color !important;
+  color: white !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -53,6 +53,24 @@ $alert-color: #B91C1C;     // Burgundy
     
     .username {
       margin-right: 8px;
+    }
+  }
+}
+
+// Custom styling for the menu items
+::ng-deep .mat-mdc-menu-panel {
+  .mat-mdc-menu-item {
+    &:hover {
+      background-color: rgba($accent-color, 0.1) !important;
+
+      .mat-icon {
+        color: $accent-color !important;
+      }
+
+      span {
+        color: $primary-color !important;
+        font-weight: 500;
+      }
     }
   }
 }
