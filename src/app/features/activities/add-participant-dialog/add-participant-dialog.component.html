@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Add Participant</h2>
+
+<form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <p class="dialog-description">
+      Enter the email address of the person you want to invite to this activity.
+    </p>
+    
+    <p class="dialog-note">
+      <mat-icon>info</mat-icon>
+      If they already have an account, they'll be added directly. Otherwise, they'll receive an invitation email to join.
+    </p>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email Address</mat-label>
+      <input matInput formControlName="email" placeholder="example@mail.com" type="email">
+      <mat-error *ngIf="participantForm.get('email')?.errors?.['required']">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="participantForm.get('email')?.errors?.['email']">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+    
+    <div *ngIf="success" class="success-message">
+      {{ success }}
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="button" [disabled]="loading" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="participantForm.invalid || loading">
+      <mat-icon *ngIf="!loading">send</mat-icon>
+      <mat-icon *ngIf="loading" class="rotating-icon">sync</mat-icon>
+      {{ loading ? 'Sending invitation...' : 'Send Invitation' }}
+    </button>
+  </div>
+</form>

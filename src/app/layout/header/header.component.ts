@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { User } from '../../core/models/auth.models';
   standalone: true,
   imports: [
     RouterLink,
+    RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -20,7 +21,7 @@ import { User } from '../../core/models/auth.models';
     NgIf
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);

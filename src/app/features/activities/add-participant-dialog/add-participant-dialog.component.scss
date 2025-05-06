@@ -1,0 +1,85 @@
+// Color palette variables
+$primary-color: #1E293B;    // Deep Indigo
+$accent-color: #F59E0B;     // Amber Gold
+$secondary-color: #64748B;  // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;      // Burgundy
+$success-color: #10B981;    // Green
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.dialog-description {
+  margin-bottom: 16px;
+  color: $primary-color;
+  font-size: 15px;
+}
+
+.dialog-note {
+  display: flex;
+  align-items: flex-start;
+  background-color: rgba($accent-color, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: $secondary-color;
+  
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    min-width: 16px;
+    margin-right: 8px;
+    margin-top: 2px;
+    color: $accent-color;
+  }
+}
+
+.error-message {
+  background-color: rgba($alert-color, 0.1);
+  color: $alert-color;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.success-message {
+  background-color: rgba($success-color, 0.1);
+  color: $success-color;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 0 8px;
+  margin-bottom: 0;
+  
+  button {
+    min-width: 120px;
+    
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-icon {
+  animation: rotating 1.5s linear infinite;
+}

@@ -1,0 +1,45 @@
+<div class="activity-list-container">
+    <div class="header-section">
+      <h1 class="page-title">My Activities</h1>
+      <button mat-raised-button color="accent" class="create-button" (click)="openCreateActivityDialog()">
+        <mat-icon>add</mat-icon>
+        Create Activity
+      </button>
+    </div>
+  
+    <div class="content-section">
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+  
+      <!-- Error message -->
+      <div *ngIf="error && !loading" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+  
+      <!-- Empty state -->
+      <mat-card *ngIf="!loading && !error && activities.length === 0" class="empty-state">
+        <mat-card-content>
+          <div class="empty-state-icon">
+            <mat-icon>widgets</mat-icon>
+          </div>
+          <h2>No Activities Yet</h2>
+          <p>You haven't created or joined any activities yet.</p>
+          <button mat-raised-button color="accent" (click)="openCreateActivityDialog()">
+            Create Your First Activity
+          </button>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Activities list -->
+      <div *ngIf="!loading && activities.length > 0" class="activities-grid">
+        <app-activity-card 
+          *ngFor="let activity of activities" 
+          [activity]="activity"
+          (click)="viewActivity(activity.id)"
+        ></app-activity-card>
+      </div>
+    </div>
+  </div>

@@ -1,4 +1,4 @@
-// New color palette
+// Color palette variables
 $primary-color: #1E293B;  // Deep Indigo
 $accent-color: #F59E0B;    // Amber Gold
 $secondary-color: #64748B; // Slate Gray
@@ -42,6 +42,25 @@ $alert-color: #B91C1C;     // Burgundy
   }
 }
 
+.nav-links {
+  margin-left: 24px;
+  display: flex;
+  
+  a {
+    margin-right: 8px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 1;
+    }
+    
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -77,6 +96,6 @@ $alert-color: #B91C1C;     // Burgundy
 
 // Style for highlighting active route
 .active-link {
-  color: $accent-color;
-  font-weight: 500;
+  opacity: 1 !important;
+  border-bottom: 2px solid $accent-color;
 }

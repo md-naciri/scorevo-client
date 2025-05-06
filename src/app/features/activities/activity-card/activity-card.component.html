@@ -1,0 +1,42 @@
+<mat-card class="activity-card">
+    <mat-card-content>
+      <div class="activity-header">
+        <div class="activity-mode-badge" [ngClass]="{'free-mode': activity.mode === 'FREE_INCREMENT', 'penalty-mode': activity.mode === 'PENALTY_BALANCE'}">
+          <mat-icon>{{ getModeIcon(activity.mode) }}</mat-icon>
+          <span>{{ getModeName(activity.mode) }}</span>
+        </div>
+        <div class="activity-date">
+          {{ getFormattedDate(activity.createdAt) }}
+        </div>
+      </div>
+      
+      <h2 class="activity-title">{{ activity.name }}</h2>
+      
+      <p *ngIf="activity.description" class="activity-description">
+        {{ activity.description }}
+      </p>
+      
+      <div class="participants-section">
+        <h3 class="section-title">Participants</h3>
+        
+        <div class="participants-list">
+          <div *ngFor="let participant of getDisplayParticipants()" class="participant-chip">
+            <div class="participant-avatar">
+              {{ participant.username.charAt(0) }}
+            </div>
+            <span class="participant-name">{{ participant.username }}</span>
+          </div>
+          
+          <div *ngIf="getAdditionalParticipantsCount() > 0" class="more-participants">
+            +{{ getAdditionalParticipantsCount() }} more
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-button color="primary" [routerLink]="['/activities', activity.id]">
+        VIEW DETAILS
+      </button>
+    </mat-card-actions>
+  </mat-card>

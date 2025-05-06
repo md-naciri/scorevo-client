@@ -1,0 +1,33 @@
+// Color palette variables
+$primary-color: #1E293B;    // Deep Indigo
+$accent-color: #F59E0B;     // Amber Gold
+$secondary-color: #64748B;  // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;      // Burgundy
+
+h2 {
+  color: $primary-color;
+  margin-bottom: 8px;
+}
+
+mat-dialog-content {
+  min-width: 300px;
+  
+  p {
+    color: $secondary-color;
+    margin-bottom: 0;
+  }
+}
+
+mat-dialog-actions {
+  justify-content: flex-end;
+  padding-top: 16px;
+  
+  button {
+    min-width: 90px;
+    
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+}

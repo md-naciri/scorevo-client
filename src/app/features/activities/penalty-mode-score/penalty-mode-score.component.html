@@ -1,0 +1,126 @@
+<div class="penalty-mode-container">
+    <div class="info-card">
+      <div class="info-icon">
+        <mat-icon>info</mat-icon>
+      </div>
+      <div class="info-content">
+        <h3>How Penalty Mode Works</h3>
+        <p>
+          When a player makes a mistake, their penalty score increases. When the other player(s) make a mistake, your penalty score is reduced.
+          If scores become equal, both are reset to zero.
+        </p>
+      </div>
+    </div>
+    
+    <div class="score-display-section">
+      <h2>Current Penalties</h2>
+      
+      <div *ngIf="loadingScores" class="loading-scores">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      
+      <div *ngIf="!loadingScores && participants.length > 0" class="score-cards">
+        <mat-card *ngFor="let participant of participants" class="score-card" [class.has-penalties]="getScore(participant.id) > 0">
+          <div class="participant-info">
+            <div class="participant-avatar">
+              {{ participant.username.charAt(0) }}
+            </div>
+            <div class="participant-details">
+              <div class="participant-name">{{ participant.username }}</div>
+            </div>
+          </div>
+          
+          <div class="score-display">
+            <div class="score">{{ getScore(participant.id) }}</div>
+            <div class="score-label">{{ getScoreDescription(getScore(participant.id)) }}</div>
+          </div>
+        </mat-card>
+      </div>
+      
+      <div *ngIf="!loadingScores && participants.length === 0" class="empty-participants">
+        <mat-icon>people</mat-icon>
+        <p>No participants yet. Add participants to start scoring.</p>
+      </div>
+    </div>
+    
+    <div class="add-mistake-section">
+      <h2>Record Mistake</h2>
+      
+      <form [formGroup]="scoreForm" (ngSubmit)="onSubmit()" class="mistake-form">
+        <mat-form-field appearance="outline" class="participant-field">
+          <mat-label>Who made a mistake?</mat-label>
+          <mat-select formControlName="userId">
+            <mat-option *ngFor="let participant of participants" [value]="participant.id">
+              {{ participant.username }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="scoreForm.get('userId')?.errors?.['required']">
+            Please select a participant
+          </mat-error>
+        </mat-form-field>
+        
+        <div class="penalty-selection">
+          <div class="penalty-label">Penalty points:</div>
+          <div class="penalty-options">
+            <button 
+              *ngFor="let option of pointOptions" 
+              type="button" 
+              mat-stroked-button 
+              (click)="setPoints(option)"
+              [class.selected]="scoreForm.get('points')?.value === option">
+              +{{ option }}
+            </button>
+          </div>
+        </div>
+        
+        <button 
+          mat-raised-button 
+          color="warn" 
+          type="submit"
+          [disabled]="scoreForm.invalid || loading"
+          class="record-button">
+          <mat-icon *ngIf="!loading">error_outline</mat-icon>
+          <mat-icon *ngIf="loading" class="rotating-icon">sync</mat-icon>
+          {{ loading ? 'Recording...' : 'Record Mistake' }}
+        </button>
+        
+        <div *ngIf="error" class="error-message">
+          {{ error }}
+        </div>
+      </form>
+    </div>
+    
+    <div class="history-section">
+      <h2>Penalty History</h2>
+      
+      <div *ngIf="loadingScores" class="loading-scores">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      
+      <div *ngIf="!loadingScores && recentScores.length > 0" class="history-list">
+        <div *ngFor="let score of recentScores" class="history-item" [class.positive-score]="score.points > 0" [class.negative-score]="score.points < 0">
+          <div class="history-avatar">
+            {{ getParticipantName(score.userId).charAt(0) }}
+          </div>
+          <div class="history-details">
+            <div class="history-text">
+              <ng-container *ngIf="score.points > 0">
+                <strong>{{ getParticipantName(score.userId) }}</strong> 
+                received a <span class="penalty-value">{{ score.points }} point penalty</span>
+              </ng-container>
+              <ng-container *ngIf="score.points < 0">
+                <strong>{{ getParticipantName(score.userId) }}</strong> 
+                had <span class="reduction-value">{{ -score.points }} point{{ -score.points !== 1 ? 's' : '' }} removed</span>
+              </ng-container>
+            </div>
+            <div class="history-time">{{ formatDate(score.timestamp) }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="!loadingScores && recentScores.length === 0" class="empty-history">
+        <mat-icon>history</mat-icon>
+        <p>No penalty history yet.</p>
+      </div>
+    </div>
+  </div>

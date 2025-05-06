@@ -1,0 +1,123 @@
+<div class="free-mode-container">
+    <div class="add-score-section">
+      <h2>Add Points</h2>
+      
+      <form [formGroup]="scoreForm" (ngSubmit)="onSubmit()" class="score-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Participant</mat-label>
+            <mat-select formControlName="userId">
+              <mat-option *ngFor="let participant of participants" [value]="participant.id">
+                {{ participant.username }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="scoreForm.get('userId')?.errors?.['required']">
+              Please select a participant
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Points</mat-label>
+            <input matInput type="number" min="1" formControlName="points">
+            <mat-error *ngIf="scoreForm.get('points')?.errors?.['required']">
+              Points value is required
+            </mat-error>
+            <mat-error *ngIf="scoreForm.get('points')?.errors?.['min']">
+              Points must be a positive number
+            </mat-error>
+          </mat-form-field>
+          
+          <button 
+            mat-raised-button 
+            color="accent" 
+            type="submit" 
+            [disabled]="scoreForm.invalid || loading"
+            class="add-button">
+            <mat-icon *ngIf="!loading">add</mat-icon>
+            <mat-icon *ngIf="loading" class="rotating-icon">sync</mat-icon>
+            {{ loading ? 'Adding...' : 'Add' }}
+          </button>
+        </div>
+        
+        <div class="points-shortcuts">
+          <span class="shortcuts-label">Quick add:</span>
+          <div class="point-buttons">
+            <button 
+              *ngFor="let option of pointOptions" 
+              type="button" 
+              mat-stroked-button 
+              (click)="setPoints(option)" 
+              [class.selected]="scoreForm.get('points')?.value === option">
+              {{ option }}
+            </button>
+          </div>
+        </div>
+        
+        <div *ngIf="error" class="error-message">
+          {{ error }}
+        </div>
+      </form>
+    </div>
+    
+    <div class="scores-section">
+      <div class="scores-container">
+        <div class="leaderboard">
+          <h2>Leaderboard</h2>
+          
+          <div *ngIf="loadingScores" class="loading-scores">
+            <mat-spinner diameter="40"></mat-spinner>
+          </div>
+          
+          <div *ngIf="!loadingScores" class="score-cards">
+            <mat-card *ngFor="let participant of participants; let i = index" class="score-card">
+              <div class="rank">{{ i + 1 }}</div>
+              
+              <div class="participant-info">
+                <div class="participant-avatar">
+                  {{ participant.username.charAt(0) }}
+                </div>
+                <div class="participant-name">{{ participant.username }}</div>
+              </div>
+              
+              <div class="score">
+                {{ totalScores[participant.id] || 0 }}
+              </div>
+            </mat-card>
+            
+            <div *ngIf="participants.length === 0" class="empty-scores">
+              <mat-icon>emoji_events</mat-icon>
+              <p>No scores yet. Add a participant and start scoring!</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="history">
+          <h2>Recent Activity</h2>
+          
+          <div *ngIf="loadingScores" class="loading-scores">
+            <mat-spinner diameter="40"></mat-spinner>
+          </div>
+          
+          <div *ngIf="!loadingScores && recentScores.length > 0" class="history-list">
+            <div *ngFor="let score of recentScores" class="history-item">
+              <div class="history-avatar">
+                {{ getParticipantName(score.userId).charAt(0) }}
+              </div>
+              <div class="history-details">
+                <div class="history-text">
+                  <strong>{{ getParticipantName(score.userId) }}</strong> 
+                  received <span class="points-value">{{ score.points }} points</span>
+                </div>
+                <div class="history-time">{{ formatDate(score.timestamp) }}</div>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="!loadingScores && recentScores.length === 0" class="empty-history">
+            <mat-icon>history</mat-icon>
+            <p>No score history yet. Start adding points!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

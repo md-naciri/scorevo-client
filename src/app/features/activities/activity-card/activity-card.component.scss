@@ -1,0 +1,143 @@
+// Color palette variables
+$primary-color: #1E293B;    // Deep Indigo
+$accent-color: #F59E0B;     // Amber Gold
+$secondary-color: #64748B;  // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;      // Burgundy
+$success-color: #10B981;    // Green for free mode
+
+.activity-card {
+  background-color: white;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.activity-mode-badge {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  
+  &.free-mode {
+    background-color: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+  
+  &.penalty-mode {
+    background-color: rgba($alert-color, 0.1);
+    color: $alert-color;
+  }
+  
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 6px;
+  }
+}
+
+.activity-date {
+  font-size: 13px;
+  color: $secondary-color;
+}
+
+.activity-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: $primary-color;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.activity-description {
+  color: $secondary-color;
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  // Limit to 3 lines with ellipsis
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.participants-section {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: $secondary-color;
+  margin-bottom: 10px;
+}
+
+.participants-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.participant-chip {
+  display: flex;
+  align-items: center;
+  background-color: $background-color;
+  border-radius: 16px;
+  padding: 4px 12px 4px 4px;
+  font-size: 13px;
+}
+
+.participant-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: $primary-color;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.participant-name {
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.more-participants {
+  font-size: 13px;
+  color: $secondary-color;
+  padding: 4px 8px;
+}
+
+mat-card-actions {
+  padding: 8px 16px 16px;
+  
+  button {
+    font-weight: 500;
+  }
+}

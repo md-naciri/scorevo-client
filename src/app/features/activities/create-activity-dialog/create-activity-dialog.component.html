@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>Create New Activity</h2>
+
+<form [formGroup]="activityForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Activity Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. Ping Pong Tournament">
+      <mat-error *ngIf="activityForm.get('name')?.errors?.['required']">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="activityForm.get('name')?.errors?.['minlength']">
+        Name must be at least 3 characters
+      </mat-error>
+      <mat-error *ngIf="activityForm.get('name')?.errors?.['maxlength']">
+        Name cannot exceed 100 characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description (Optional)</mat-label>
+      <textarea matInput formControlName="description" rows="3" placeholder="Add details about this activity"></textarea>
+      <mat-error *ngIf="activityForm.get('description')?.errors?.['maxlength']">
+        Description cannot exceed 500 characters
+      </mat-error>
+    </mat-form-field>
+
+    <div class="mode-selection">
+      <h3>Select Activity Mode</h3>
+      
+      <mat-radio-group formControlName="mode" class="mode-radio-group">
+        <mat-radio-button value="FREE_INCREMENT" class="mode-option">
+          <div class="mode-content">
+            <div class="mode-header">
+              <span class="mode-name">Free Mode</span>
+              <mat-icon>trending_up</mat-icon>
+            </div>
+            <p class="mode-description">{{ modeDocs.FREE_INCREMENT }}</p>
+          </div>
+        </mat-radio-button>
+        
+        <mat-radio-button value="PENALTY_BALANCE" class="mode-option">
+          <div class="mode-content">
+            <div class="mode-header">
+              <span class="mode-name">Penalty Mode</span>
+              <mat-icon>balance</mat-icon>
+            </div>
+            <p class="mode-description">{{ modeDocs.PENALTY_BALANCE }}</p>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="button" [disabled]="loading" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="activityForm.invalid || loading">
+      <mat-icon *ngIf="!loading">add</mat-icon>
+      <mat-icon *ngIf="loading" class="rotating-icon">sync</mat-icon>
+      {{ loading ? 'Creating...' : 'Create Activity' }}
+    </button>
+  </div>
+</form>
