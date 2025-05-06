@@ -90,4 +90,27 @@ export class AuthService {
     const user = this.getCurrentUser();
     return !!user && user.roles.includes(role);
   }
+
+  // New method to update user profile information
+  updateProfile(userId: number, userData: Partial<User>): Observable<User> {
+    return this.http.put<User>(
+      `http://localhost:8080/api/users/${userId}`,
+      userData,
+      httpOptions
+    ).pipe(
+      tap(updatedUser => {
+        // Update the current user in storage
+        const currentUser = this.getCurrentUser();
+        if (currentUser) {
+          const user: User = {
+            ...currentUser,
+            ...updatedUser
+          };
+          
+          localStorage.setItem('auth-user', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+      })
+    );
+  }
 }

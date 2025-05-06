@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   
   currentUser: User | null = null;
-  logoUrl = 'assets/images/sco-logo.png';
+  logoUrl = 'assets/images/sco-inverted-logo.png';
   
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {

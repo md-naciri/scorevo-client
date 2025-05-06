@@ -1,0 +1,123 @@
+<div class="profile-container">
+  <app-header></app-header>
+  
+  <div class="content-container">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <div class="profile-header">
+          <h2 class="profile-title">My Profile</h2>
+          <p class="profile-subtitle">Manage your account information</p>
+        </div>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div *ngIf="loading" class="spinner-container">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+          <div class="form-section">
+            <h3 class="section-title">Account Information</h3>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" class="input-field">
+              <mat-icon matSuffix class="field-icon">person</mat-icon>
+              <mat-error *ngIf="profileForm.get('username')?.errors?.['required']">
+                Username is required
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('username')?.errors?.['minlength']">
+                Username must be at least 3 characters
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('username')?.errors?.['maxlength']">
+                Username cannot exceed 20 characters
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email" class="input-field">
+              <mat-icon matSuffix class="field-icon">email</mat-icon>
+              <mat-error *ngIf="profileForm.get('email')?.errors?.['required']">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('email')?.errors?.['email']">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('email')?.errors?.['maxlength']">
+                Email cannot exceed 50 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+          
+          <div class="form-section">
+            <h3 class="section-title">Change Password</h3>
+            <p class="password-info">To change your password, enter your current password first</p>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Current Password</mat-label>
+              <input matInput formControlName="currentPassword" [type]="hideCurrentPassword ? 'password' : 'text'" class="input-field">
+              <button type="button" mat-icon-button matSuffix (click)="hideCurrentPassword = !hideCurrentPassword" tabindex="-1" class="visibility-toggle">
+                <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="passwordChangeAttempted && !profileForm.get('currentPassword')?.value">
+                Current password is required to change password
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>New Password</mat-label>
+              <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" class="input-field"
+                     [disabled]="!profileForm.get('currentPassword')?.value">
+              <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" tabindex="-1" class="visibility-toggle">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="profileForm.get('password')?.errors?.['minlength']">
+                Password must be at least 6 characters
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('password')?.errors?.['maxlength']">
+                Password cannot exceed 40 characters
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" class="input-field"
+                     [disabled]="!profileForm.get('currentPassword')?.value">
+              <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" tabindex="-1" class="visibility-toggle">
+                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="profileForm.get('confirmPassword')?.errors?.['passwordMismatch']">
+                Passwords don't match
+              </mat-error>
+            </mat-form-field>
+          </div>
+          
+          <div *ngIf="error" class="error-message">
+            <mat-icon class="message-icon">error</mat-icon>
+            <span>{{error}}</span>
+          </div>
+          
+          <div *ngIf="successMessage" class="success-message">
+            <mat-icon class="message-icon">check_circle</mat-icon>
+            <span>{{successMessage}}</span>
+          </div>
+          
+          <div class="button-container">
+            <button mat-flat-button type="button" (click)="resetForm()" class="reset-button"
+                    [disabled]="submitting || !profileForm.dirty">
+              Cancel
+            </button>
+            <button mat-flat-button color="accent" class="submit-button" type="submit" 
+                   [disabled]="submitting || !profileForm.valid || !profileForm.dirty">
+              <span class="button-text" [class.loading]="submitting">Save Changes</span>
+              <div *ngIf="submitting" class="loader-container">
+                <div class="loader"></div>
+              </div>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

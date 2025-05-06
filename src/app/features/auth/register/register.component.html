@@ -59,9 +59,9 @@
       </div>
 
       <button mat-raised-button color="accent" class="submit-button" type="submit" [disabled]="loading">
-        <div class="button-content">
-          <mat-spinner *ngIf="loading" diameter="20" class="spinner"></mat-spinner>
-          <span>Sign Up</span>
+        <span class="button-text" [class.loading]="loading">Sign Up</span>
+        <div *ngIf="loading" class="loader-container">
+          <div class="loader"></div>
         </div>
       </button>
       
