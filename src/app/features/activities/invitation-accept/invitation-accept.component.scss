@@ -1,0 +1,127 @@
+$primary-color: #1E293B;    // Deep Indigo
+$accent-color: #F59E0B;     // Amber Gold
+$secondary-color: #64748B;  // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;      // Burgundy
+
+.invitation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: $background-color;
+  padding: 20px;
+}
+
+.invitation-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.error-message {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  mat-icon {
+    color: $alert-color;
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    margin-bottom: 16px;
+  }
+  
+  span {
+    color: $primary-color;
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  
+  button {
+    margin-top: 16px;
+  }
+}
+
+.invitation-content {
+  padding: 0;
+}
+
+.invitation-header {
+  background-color: $primary-color;
+  color: white;
+  padding: 24px;
+  
+  h2 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  .invitation-from {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+}
+
+.invitation-details {
+  padding: 24px;
+  
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 22px;
+    color: $primary-color;
+    font-weight: 500;
+  }
+  
+  .invitation-message {
+    color: $secondary-color;
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .expired-message {
+    display: flex;
+    align-items: center;
+    background-color: rgba($alert-color, 0.1);
+    color: $alert-color;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.invitation-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px 24px;
+  
+  button {
+    min-width: 120px;
+    
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+  
+  .spinner {
+    margin: 0 auto;
+  }
+}

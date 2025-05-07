@@ -4,6 +4,15 @@
       <img src="assets/images/sco-logo.png" alt="Scorevo">
     </div>
     
+    <div *ngIf="invitationDetails" class="invitation-info">
+      <mat-icon>email</mat-icon>
+      <p>
+        You've been invited to join <strong>{{ invitationDetails.activityName }}</strong> by 
+        <strong>{{ invitationDetails.invitedBy }}</strong>. 
+        After registration, you will be automatically added to this activity.
+      </p>
+    </div>
+    
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="full-width">
         <mat-label>Username</mat-label>
@@ -21,7 +30,8 @@
 
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email">
+        <input matInput formControlName="email" type="email" [readonly]="invitationDetails !== null">
+        <mat-hint *ngIf="invitationDetails">This email matches your invitation</mat-hint>
         <mat-error *ngIf="registerForm.get('email')?.errors?.['required']">
           Email is required
         </mat-error>
@@ -67,7 +77,7 @@
       
       <div class="auth-footer">
         <span>Already have an account?</span>
-        <a routerLink="/auth/login" class="auth-link">Sign in</a>
+        <a routerLink="/auth/login" [queryParams]="invitationToken ? {invitation: invitationToken} : {}" class="auth-link">Sign in</a>
       </div>
     </form>
   </mat-card>

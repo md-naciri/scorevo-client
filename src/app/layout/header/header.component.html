@@ -19,6 +19,10 @@
     </div>
     
     <span class="spacer"></span>
+
+    <div class="invitation-section" *ngIf="currentUser">
+      <app-invitation-badge></app-invitation-badge>
+    </div>
     
     <div class="user-section" *ngIf="currentUser">
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">

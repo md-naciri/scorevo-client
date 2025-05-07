@@ -3,6 +3,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { ProfileComponent } from './features/profile/profile/profile.component';
 import { ActivityListComponent } from './features/activities/activity-list/activity-list.component';
 import { ActivityDetailComponent } from './features/activities/activity-detail/activity-detail.component';
+import { InvitationAcceptComponent } from './features/activities/invitation-accept/invitation-accept.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'activities', pathMatch: 'full' },
@@ -31,5 +32,10 @@ export const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
-  { path: '**', redirectTo: 'activities' }
+  { path: '**', redirectTo: 'activities' },
+  {
+    path: 'invitations/accept/:token',
+    component: InvitationAcceptComponent,
+    canActivate: [AuthGuard]
+  },
 ];

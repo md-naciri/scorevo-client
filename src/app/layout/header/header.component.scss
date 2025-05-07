@@ -99,3 +99,10 @@ $alert-color: #B91C1C;     // Burgundy
   opacity: 1 !important;
   border-bottom: 2px solid $accent-color;
 }
+
+/* Update src/app/layout/header/header.component.scss */
+/* Add this style */
+
+.invitation-section {
+  margin-right: 16px;
+}

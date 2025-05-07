@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../core/models/auth.models';
+import { InvitationBadgeComponent } from '../invitation-badge/invitation-badge.component';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,8 @@ import { User } from '../../core/models/auth.models';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    NgIf
+    NgIf,
+    InvitationBadgeComponent
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']

@@ -1,0 +1,36 @@
+<!-- src/app/layout/invitation-badge/invitation-badge.component.html -->
+<button mat-icon-button [matMenuTriggerFor]="invitationMenu" 
+        [matBadge]="pendingInvitations.length" 
+        [matBadgeHidden]="pendingInvitations.length === 0"
+        matBadgeColor="accent"
+        matBadgeSize="small"
+        class="invitation-button">
+  <mat-icon>notifications</mat-icon>
+</button>
+
+<mat-menu #invitationMenu="matMenu" class="invitation-menu">
+  <div class="menu-header">
+    <h3>Invitations</h3>
+  </div>
+  
+  <div *ngIf="loading" class="menu-loading">
+    <mat-spinner diameter="20"></mat-spinner>
+    <span>Loading invitations...</span>
+  </div>
+  
+  <div *ngIf="!loading && pendingInvitations.length === 0" class="menu-empty">
+    <mat-icon>notifications_none</mat-icon>
+    <span>No pending invitations</span>
+  </div>
+  
+  <ng-container *ngIf="!loading && pendingInvitations.length > 0">
+    <button mat-menu-item *ngFor="let invitation of pendingInvitations" 
+            [routerLink]="['/invitations/accept', invitation.token]">
+      <mat-icon>group_add</mat-icon>
+      <span>
+        Join <strong>{{ invitation.activityName }}</strong>
+        <small>Invited by {{ invitation.invitedBy }}</small>
+      </span>
+    </button>
+  </ng-container>
+</mat-menu>

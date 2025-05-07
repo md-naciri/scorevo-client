@@ -1,0 +1,72 @@
+// Color palette variables
+$primary-color: #1E293B;    // Deep Indigo
+$accent-color: #F59E0B;     // Amber Gold
+$secondary-color: #64748B;  // Slate Gray
+$background-color: #F8FAFC; // Light Stone
+$alert-color: #B91C1C;      // Burgundy
+
+.invitation-button {
+  position: relative;
+}
+
+::ng-deep .invitation-menu {
+  min-width: 250px !important;
+  max-width: 300px !important;
+  
+  .menu-header {
+    padding: 12px 16px 8px;
+    border-bottom: 1px solid rgba($primary-color, 0.1);
+    
+    h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: $primary-color;
+    }
+  }
+  
+  .menu-loading, .menu-empty {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    color: $secondary-color;
+    
+    mat-icon, mat-spinner {
+      margin-right: 8px;
+    }
+    
+    span {
+      font-size: 14px;
+    }
+  }
+  
+  .mat-mdc-menu-item {
+    display: flex;
+    align-items: flex-start;
+    min-height: unset;
+    height: auto;
+    line-height: 1.4;
+    padding: 12px 16px;
+    
+    .mat-icon {
+      margin-right: 12px;
+      margin-top: 2px;
+    }
+    
+    span {
+      display: flex;
+      flex-direction: column;
+      
+      strong {
+        font-weight: 500;
+        color: $primary-color;
+      }
+      
+      small {
+        font-size: 12px;
+        color: $secondary-color;
+        margin-top: 4px;
+      }
+    }
+  }
+}
