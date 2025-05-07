@@ -54,9 +54,15 @@ export class ActivityService {
   /**
    * Delete an activity
    */
+
   deleteActivity(id: number): Observable<void> {
+    console.log('ActivityService: Deleting activity with ID:', id);
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError)
+      tap(() => console.log('ActivityService: Activity deleted successfully')),
+      catchError(error => {
+        console.error('ActivityService: Error deleting activity:', error);
+        return throwError(() => error);
+      })
     );
   }
 
@@ -96,9 +102,9 @@ export class ActivityService {
    */
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
-    
+
     let errorMessage = 'An unknown error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
@@ -110,7 +116,7 @@ export class ActivityService {
         errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
       }
     }
-    
+
     return throwError(() => new Error(errorMessage));
   }
 }

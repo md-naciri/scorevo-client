@@ -100,9 +100,28 @@ $alert-color: #B91C1C;     // Burgundy
   border-bottom: 2px solid $accent-color;
 }
 
-/* Update src/app/layout/header/header.component.scss */
 /* Add this style */
 
 .invitation-section {
   margin-right: 16px;
+}
+
+.mat-badge-content {
+  font-weight: 600;
+  font-size: 12px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.notifications-section button {
+  position: relative;
+}
+
+::ng-deep .mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: -5px;
+  right: -5px;
+}
+
+::ng-deep .mat-badge-accent .mat-badge-content {
+  background: #F59E0B;
+  color: white;
 }

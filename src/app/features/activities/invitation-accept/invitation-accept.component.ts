@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { InvitationService } from '../../../core/services/invitation.service';
 import { Invitation } from '../../../core/models/invitation.model';
@@ -15,7 +16,8 @@ import { Invitation } from '../../../core/models/invitation.model';
     CommonModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   templateUrl: './invitation-accept.component.html',
   styleUrls: ['./invitation-accept.component.scss']
@@ -32,10 +34,12 @@ export class InvitationAcceptComponent implements OnInit {
     private router: Router,
     private invitationService: InvitationService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.invitationToken = this.route.snapshot.paramMap.get('token');
+    console.log('Token from URL:', this.invitationToken); // Debug logging
+
     if (this.invitationToken) {
       this.loadInvitationDetails();
     } else {
@@ -49,10 +53,12 @@ export class InvitationAcceptComponent implements OnInit {
 
     this.invitationService.getInvitationDetails(this.invitationToken).subscribe({
       next: (invitation) => {
+        console.log('Invitation details loaded:', invitation); // Debug logging
         this.invitation = invitation;
         this.loading = false;
       },
       error: (err) => {
+        console.error('Error loading invitation details:', err); // Debug logging
         this.error = 'Invalid invitation or invitation has expired';
         this.loading = false;
       }
@@ -62,15 +68,18 @@ export class InvitationAcceptComponent implements OnInit {
   acceptInvitation(): void {
     if (!this.invitationToken) return;
 
+    console.log('Accepting invitation with token:', this.invitationToken); // Debug logging
     this.processing = true;
     this.invitationService.acceptInvitation(this.invitationToken).subscribe({
       next: (response) => {
+        console.log('Invitation accepted:', response); // Debug logging
         this.snackBar.open(response.message, 'Close', {
           duration: 3000
         });
         this.router.navigate(['/activities']);
       },
       error: (err) => {
+        console.error('Error accepting invitation:', err); // Debug logging
         this.error = err.error?.message || 'Failed to accept invitation';
         this.processing = false;
         this.snackBar.open('Failed to accept invitation: ' + this.error, 'Close', {
@@ -82,6 +91,21 @@ export class InvitationAcceptComponent implements OnInit {
   }
 
   declineInvitation(): void {
-    this.router.navigate(['/activities']);
+    if (!this.invitationToken) return;
+
+    this.processing = true;
+    this.invitationService.declineInvitation(this.invitationToken).subscribe({
+      next: (response) => {
+        this.snackBar.open('Invitation declined', 'Close', {
+          duration: 3000
+        });
+        this.router.navigate(['/activities']);
+      },
+      error: (err) => {
+        console.error('Error declining invitation:', err);
+        // Still navigate away even if there's an error
+        this.router.navigate(['/activities']);
+      }
+    });
   }
 }

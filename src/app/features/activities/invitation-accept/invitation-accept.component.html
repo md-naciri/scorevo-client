@@ -1,45 +1,45 @@
 <div class="invitation-container">
-    <div class="invitation-card">
-      <div *ngIf="loading" class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
+  <mat-card class="invitation-card">
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <div *ngIf="error && !loading" class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ error }}</span>
+      <button mat-raised-button color="primary" routerLink="/activities">
+        Go to Activities
+      </button>
+    </div>
+
+    <div *ngIf="invitation && !loading" class="invitation-content">
+      <div class="invitation-header">
+        <h2>Activity Invitation</h2>
+        <p class="invitation-from">From: <strong>{{ invitation.invitedBy }}</strong></p>
       </div>
-  
-      <div *ngIf="error && !loading" class="error-message">
-        <mat-icon>error</mat-icon>
-        <span>{{ error }}</span>
-        <button mat-raised-button color="primary" routerLink="/activities">
-          Go to Activities
+
+      <div class="invitation-details">
+        <h3>{{ invitation.activityName }}</h3>
+        <p class="invitation-message">
+          You've been invited to join an activity on Scorevo!
+        </p>
+        
+        <div *ngIf="invitation.isExpired" class="expired-message">
+          <mat-icon>schedule</mat-icon>
+          <span>This invitation has expired</span>
+        </div>
+      </div>
+
+      <div class="invitation-actions">
+        <button mat-button color="warn" (click)="declineInvitation()" [disabled]="processing">
+          Decline
+        </button>
+        <button mat-raised-button color="accent" (click)="acceptInvitation()" 
+                [disabled]="processing || invitation.isExpired">
+          <span *ngIf="!processing">Accept Invitation</span>
+          <mat-spinner *ngIf="processing" diameter="20" class="spinner"></mat-spinner>
         </button>
       </div>
-  
-      <div *ngIf="invitation && !loading" class="invitation-content">
-        <div class="invitation-header">
-          <h2>Activity Invitation</h2>
-          <p class="invitation-from">From: <strong>{{ invitation.invitedBy }}</strong></p>
-        </div>
-  
-        <div class="invitation-details">
-          <h3>{{ invitation.activityName }}</h3>
-          <p class="invitation-message">
-            You've been invited to join an activity on Scorevo!
-          </p>
-          
-          <div *ngIf="invitation.isExpired" class="expired-message">
-            <mat-icon>schedule</mat-icon>
-            <span>This invitation has expired</span>
-          </div>
-        </div>
-  
-        <div class="invitation-actions">
-          <button mat-button color="warn" (click)="declineInvitation()" [disabled]="processing">
-            Decline
-          </button>
-          <button mat-raised-button color="accent" (click)="acceptInvitation()" 
-                  [disabled]="processing || invitation.isExpired">
-            <span *ngIf="!processing">Accept Invitation</span>
-            <mat-spinner *ngIf="processing" diameter="20" class="spinner"></mat-spinner>
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+  </mat-card>
+</div>

@@ -43,31 +43,31 @@ export class ActivityDetailComponent implements OnInit {
   activity?: Activity;
   loading = true;
   error = '';
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private activityService: ActivityService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     this.loadActivity();
   }
-  
+
   loadActivity(): void {
     const activityId = Number(this.route.snapshot.paramMap.get('id'));
-    
+
     if (!activityId) {
       this.error = 'Invalid activity ID';
       this.loading = false;
       return;
     }
-    
+
     this.loading = true;
     this.error = '';
-    
+
     this.activityService.getActivityById(activityId).subscribe({
       next: (activity) => {
         this.activity = activity;
@@ -79,15 +79,15 @@ export class ActivityDetailComponent implements OnInit {
       }
     });
   }
-  
+
   openAddParticipantDialog(): void {
     if (!this.activity) return;
-    
+
     const dialogRef = this.dialog.open(AddParticipantDialogComponent, {
       width: '500px',
       data: { activityId: this.activity.id }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadActivity(); // Refresh activity data
@@ -97,10 +97,10 @@ export class ActivityDetailComponent implements OnInit {
       }
     });
   }
-  
+
   removeParticipant(participantId: number): void {
     if (!this.activity) return;
-    
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -110,7 +110,7 @@ export class ActivityDetailComponent implements OnInit {
         cancelText: 'Cancel'
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.activityService.removeParticipant(this.activity!.id, participantId).subscribe({
@@ -130,10 +130,12 @@ export class ActivityDetailComponent implements OnInit {
       }
     });
   }
-  
+
+  // The deleteActivity method in the ActivityDetailComponent
+
   deleteActivity(): void {
     if (!this.activity) return;
-    
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -144,18 +146,30 @@ export class ActivityDetailComponent implements OnInit {
         isDestructive: true
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log('Attempting to delete activity:', this.activity?.id);
+
         this.activityService.deleteActivity(this.activity!.id).subscribe({
           next: () => {
+            console.log('Activity deleted successfully');
             this.router.navigate(['/activities']);
             this.snackBar.open('Activity deleted successfully', 'Close', {
               duration: 3000
             });
           },
           error: (err) => {
-            this.snackBar.open(err.error?.message || 'Failed to delete activity', 'Close', {
+            console.error('Error deleting activity:', err);
+            let errorMessage = 'Failed to delete activity';
+
+            if (err.error && err.error.message) {
+              errorMessage = err.error.message;
+            } else if (err.message) {
+              errorMessage = err.message;
+            }
+
+            this.snackBar.open(errorMessage, 'Close', {
               duration: 3000,
               panelClass: 'error-snackbar'
             });
@@ -164,7 +178,7 @@ export class ActivityDetailComponent implements OnInit {
       }
     });
   }
-  
+
   // Helper method to get a readable activity mode name
   getModeName(mode: string): string {
     switch (mode) {
@@ -176,7 +190,7 @@ export class ActivityDetailComponent implements OnInit {
         return mode;
     }
   }
-  
+
   // Helper method to get icon for activity mode
   getModeIcon(mode: string): string {
     switch (mode) {
@@ -188,11 +202,11 @@ export class ActivityDetailComponent implements OnInit {
         return 'category';
     }
   }
-  
+
   // Helper method to format a date
   formatDate(dateString: string): string {
     if (!dateString) return '';
-    
+
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',

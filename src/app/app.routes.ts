@@ -28,14 +28,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: '**', redirectTo: 'activities' },
-  {
     path: 'invitations/accept/:token',
     component: InvitationAcceptComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: '**', redirectTo: 'activities' }
 ];
