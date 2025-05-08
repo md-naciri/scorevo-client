@@ -12,6 +12,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 import { Activity } from '../../../core/models/activity.model';
 import { ActivityService } from '../../../core/services/activity.service';
 import { ConfirmDialogComponent } from '../../../shared/dialogs/confirm-dialog/confirm-dialog.component';
@@ -24,6 +25,7 @@ import { PenaltyModeScoreComponent } from '../penalty-mode-score/penalty-mode-sc
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -80,6 +82,12 @@ export class ActivityDetailComponent implements OnInit {
     });
   }
 
+  // Add explicit navigation method
+  goToActivities(): void {
+    console.log('Navigating to activities list');
+    this.router.navigate(['/activities']);
+  }
+
   openAddParticipantDialog(): void {
     if (!this.activity) return;
 
@@ -130,8 +138,6 @@ export class ActivityDetailComponent implements OnInit {
       }
     });
   }
-
-  // The deleteActivity method in the ActivityDetailComponent
 
   deleteActivity(): void {
     if (!this.activity) return;

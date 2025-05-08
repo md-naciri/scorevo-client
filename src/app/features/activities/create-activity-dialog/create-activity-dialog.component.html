@@ -28,7 +28,7 @@
       <h3>Select Activity Mode</h3>
       
       <mat-radio-group formControlName="mode" class="mode-radio-group">
-        <mat-radio-button value="FREE_INCREMENT" class="mode-option">
+        <mat-radio-button value="FREE_INCREMENT" class="mode-option" [class.selected]="activityForm.get('mode')?.value === 'FREE_INCREMENT'">
           <div class="mode-content">
             <div class="mode-header">
               <span class="mode-name">Free Mode</span>
@@ -38,7 +38,7 @@
           </div>
         </mat-radio-button>
         
-        <mat-radio-button value="PENALTY_BALANCE" class="mode-option">
+        <mat-radio-button value="PENALTY_BALANCE" class="mode-option" [class.selected]="activityForm.get('mode')?.value === 'PENALTY_BALANCE'">
           <div class="mode-content">
             <div class="mode-header">
               <span class="mode-name">Penalty Mode</span>

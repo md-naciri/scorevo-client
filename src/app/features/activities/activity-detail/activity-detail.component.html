@@ -1,115 +1,115 @@
 <div class="activity-detail-container">
-    <!-- Back button -->
-    <div class="nav-actions">
-      <button mat-button color="primary" class="back-button" routerLink="/activities">
-        <mat-icon>arrow_back</mat-icon>
-        Back to Activities
-      </button>
-    </div>
-  
-    <!-- Loading spinner -->
-    <div *ngIf="loading" class="loading-container">
-      <mat-spinner diameter="50"></mat-spinner>
-    </div>
-  
-    <!-- Error message -->
-    <div *ngIf="error && !loading" class="error-message">
-      <mat-icon>error</mat-icon>
-      <span>{{ error }}</span>
-    </div>
-  
-    <!-- Activity details -->
-    <div *ngIf="activity && !loading" class="activity-content">
-      <div class="activity-header">
-        <div class="activity-header-content">
-          <div class="activity-mode-badge" [ngClass]="{'free-mode': activity.mode === 'FREE_INCREMENT', 'penalty-mode': activity.mode === 'PENALTY_BALANCE'}">
-            <mat-icon>{{ getModeIcon(activity.mode) }}</mat-icon>
-            <span>{{ getModeName(activity.mode) }}</span>
-          </div>
-          
-          <h1 class="activity-title">{{ activity.name }}</h1>
-          
-          <p *ngIf="activity.description" class="activity-description">
-            {{ activity.description }}
-          </p>
-          
-          <p class="activity-date">
-            Created on {{ formatDate(activity.createdAt) }}
-          </p>
+  <!-- Back button - FIXED VERSION -->
+  <div class="nav-actions">
+    <button mat-button color="primary" class="back-button" (click)="goToActivities()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Activities
+    </button>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error && !loading" class="error-message">
+    <mat-icon>error</mat-icon>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Activity details -->
+  <div *ngIf="activity && !loading" class="activity-content">
+    <div class="activity-header">
+      <div class="activity-header-content">
+        <div class="activity-mode-badge" [ngClass]="{'free-mode': activity.mode === 'FREE_INCREMENT', 'penalty-mode': activity.mode === 'PENALTY_BALANCE'}">
+          <mat-icon>{{ getModeIcon(activity.mode) }}</mat-icon>
+          <span>{{ getModeName(activity.mode) }}</span>
         </div>
         
-        <div class="activity-actions">
-          <button mat-icon-button [matMenuTriggerFor]="activityMenu" aria-label="Activity options">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #activityMenu="matMenu">
-            <button mat-menu-item (click)="openAddParticipantDialog()">
-              <mat-icon>person_add</mat-icon>
-              <span>Add Participant</span>
-            </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item class="delete-action" (click)="deleteActivity()">
-              <mat-icon>delete</mat-icon>
-              <span>Delete Activity</span>
-            </button>
-          </mat-menu>
-        </div>
+        <h1 class="activity-title">{{ activity.name }}</h1>
+        
+        <p *ngIf="activity.description" class="activity-description">
+          {{ activity.description }}
+        </p>
+        
+        <p class="activity-date">
+          Created on {{ formatDate(activity.createdAt) }}
+        </p>
       </div>
       
-      <mat-divider></mat-divider>
-      
-      <mat-tab-group animationDuration="0ms" class="activity-tabs">
-        <!-- Scoring tab -->
-        <mat-tab label="Scoring">
-          <div class="tab-content">
-            <!-- Free Mode Scoring Component -->
-            <ng-container *ngIf="activity.mode === 'FREE_INCREMENT'">
-              <app-free-mode-score [activityId]="activity.id" [participants]="activity.participants"></app-free-mode-score>
-            </ng-container>
-            
-            <!-- Penalty Mode Scoring Component -->
-            <ng-container *ngIf="activity.mode === 'PENALTY_BALANCE'">
-              <app-penalty-mode-score [activityId]="activity.id" [participants]="activity.participants"></app-penalty-mode-score>
-            </ng-container>
-          </div>
-        </mat-tab>
-        
-        <!-- Participants tab -->
-        <mat-tab label="Participants">
-          <div class="tab-content">
-            <div class="participants-header">
-              <h2>Participants</h2>
-              <button mat-raised-button color="accent" (click)="openAddParticipantDialog()">
-                <mat-icon>person_add</mat-icon>
-                Add Participant
-              </button>
-            </div>
-            
-            <div class="participants-list">
-              <mat-card *ngFor="let participant of activity.participants" class="participant-card">
-                <div class="participant-info">
-                  <div class="participant-avatar">
-                    {{ participant.username.charAt(0) }}
-                  </div>
-                  <div class="participant-details">
-                    <h3 class="participant-name">{{ participant.username }}</h3>
-                    <p class="participant-email">{{ participant.email }}</p>
-                  </div>
-                </div>
-                
-                <button mat-icon-button color="warn" (click)="removeParticipant(participant.id)" 
-                        matTooltip="Remove participant">
-                  <mat-icon>person_remove</mat-icon>
-                </button>
-              </mat-card>
-              
-              <div *ngIf="activity.participants.length === 0" class="empty-participants">
-                <mat-icon>group_off</mat-icon>
-                <p>No participants yet. Add someone to get started!</p>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+      <div class="activity-actions">
+        <button mat-icon-button [matMenuTriggerFor]="activityMenu" aria-label="Activity options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #activityMenu="matMenu">
+          <button mat-menu-item (click)="openAddParticipantDialog()">
+            <mat-icon>person_add</mat-icon>
+            <span>Add Participant</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="delete-action" (click)="deleteActivity()">
+            <mat-icon>delete</mat-icon>
+            <span>Delete Activity</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
+    
+    <mat-divider></mat-divider>
+    
+    <mat-tab-group animationDuration="0ms" class="activity-tabs">
+      <!-- Scoring tab -->
+      <mat-tab label="Scoring">
+        <div class="tab-content">
+          <!-- Free Mode Scoring Component -->
+          <ng-container *ngIf="activity.mode === 'FREE_INCREMENT'">
+            <app-free-mode-score [activityId]="activity.id" [participants]="activity.participants"></app-free-mode-score>
+          </ng-container>
+          
+          <!-- Penalty Mode Scoring Component -->
+          <ng-container *ngIf="activity.mode === 'PENALTY_BALANCE'">
+            <app-penalty-mode-score [activityId]="activity.id" [participants]="activity.participants"></app-penalty-mode-score>
+          </ng-container>
+        </div>
+      </mat-tab>
+      
+      <!-- Participants tab -->
+      <mat-tab label="Participants">
+        <div class="tab-content">
+          <div class="participants-header">
+            <h2>Participants</h2>
+            <button mat-raised-button color="accent" (click)="openAddParticipantDialog()">
+              <mat-icon>person_add</mat-icon>
+              Add Participant
+            </button>
+          </div>
+          
+          <div class="participants-list">
+            <mat-card *ngFor="let participant of activity.participants" class="participant-card">
+              <div class="participant-info">
+                <div class="participant-avatar">
+                  {{ participant.username.charAt(0) }}
+                </div>
+                <div class="participant-details">
+                  <h3 class="participant-name">{{ participant.username }}</h3>
+                  <p class="participant-email">{{ participant.email }}</p>
+                </div>
+              </div>
+              
+              <button mat-icon-button color="warn" (click)="removeParticipant(participant.id)" 
+                      matTooltip="Remove participant">
+                <mat-icon>person_remove</mat-icon>
+              </button>
+            </mat-card>
+            
+            <div *ngIf="activity.participants.length === 0" class="empty-participants">
+              <mat-icon>group_off</mat-icon>
+              <p>No participants yet. Add someone to get started!</p>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
+</div>

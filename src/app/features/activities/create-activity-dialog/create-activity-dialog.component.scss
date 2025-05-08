@@ -4,20 +4,10 @@ $accent-color: #F59E0B;     // Amber Gold
 $secondary-color: #64748B;  // Slate Gray
 $background-color: #F8FAFC; // Light Stone
 $alert-color: #B91C1C;      // Burgundy
-$success-color: #10B981;    // Green
 
 .full-width {
   width: 100%;
   margin-bottom: 16px;
-}
-
-mat-dialog-content {
-  min-width: 400px;
-  max-width: 100%;
-  
-  @media (max-width: 576px) {
-    min-width: unset;
-  }
 }
 
 .mode-selection {
@@ -27,7 +17,7 @@ mat-dialog-content {
     font-size: 16px;
     font-weight: 500;
     color: $primary-color;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
 }
 
@@ -39,21 +29,19 @@ mat-dialog-content {
 
 .mode-option {
   padding: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
   
-  ::ng-deep .mat-mdc-radio-button {
-    flex: 1;
+  &.selected {
+    border-color: $accent-color;
+    background-color: rgba($accent-color, 0.08);
   }
 }
 
 .mode-content {
   margin-left: 8px;
-  padding: 12px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-  
-  &:hover {
-    background-color: rgba($accent-color, 0.05);
-  }
+  padding: 8px;
 }
 
 .mode-header {
@@ -76,7 +64,7 @@ mat-dialog-content {
 }
 
 .mode-description {
-  font-size: 13px;
+  font-size: 14px;
   color: $secondary-color;
   margin: 0;
   line-height: 1.4;
@@ -117,4 +105,99 @@ mat-dialog-actions {
 
 .rotating-icon {
   animation: rotating 1.5s linear infinite;
+}
+
+// Auth style input fields - copied from auth.styles.scss
+::ng-deep {
+  .mat-mdc-form-field.mat-form-field-appearance-outline {
+    // Background of the form field
+    .mat-mdc-text-field-wrapper {
+      background-color: #ffffff;
+      padding: 0;
+    }
+    
+    // Size and padding of the input container
+    .mat-mdc-form-field-flex {
+      padding: 0 12px;
+      height: 56px;
+    }
+    
+    // Infix padding to give text space inside
+    .mat-mdc-form-field-infix {
+      padding: 12px 0 8px !important;
+      min-height: 44px !important;
+    }
+    
+    // Label positioning
+    .mdc-floating-label {
+      top: 23px;
+      font-size: 14px;
+      color: $secondary-color;
+    }
+    
+    // Floating label when active/focused
+    .mdc-floating-label--float-above {
+      top: 26px !important;
+      transform: translateY(-24px) scale(0.75);
+    }
+    
+    // Border color in normal state
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #e0e0e0;
+    }
+    
+    // Border color in focused state
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: $accent-color !important;
+        border-width: 2px;
+      }
+    }
+    
+    // Input text styling
+    .mat-mdc-input-element {
+      font-size: 14px !important;
+      padding-left: 4px !important;
+      caret-color: $accent-color;
+    }
+    
+    // Placeholder styling
+    .mat-mdc-input-element::placeholder {
+      color: rgba($secondary-color, 0.7);
+      font-size: 14px;
+    }
+    
+    // Textarea specific styles
+    textarea.mat-mdc-input-element {
+      margin-top: 10px !important;
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    // Adjust for textarea fields
+    &:has(textarea) {
+      .mat-mdc-form-field-flex {
+        height: auto;
+        min-height: 100px;
+      }
+    }
+  }
+  
+  // Error message styling
+  .mat-mdc-form-field-error-wrapper {
+    padding: 0;
+  }
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 20px !important;
+  }
+  
+  .mat-mdc-form-field-error {
+    font-size: 11px !important;
+    letter-spacing: -0.2px;
+  }
 }
