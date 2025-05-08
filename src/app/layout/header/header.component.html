@@ -20,20 +20,25 @@
     <span class="spacer"></span>
     
     <div class="notifications-section" *ngIf="currentUser">
-      <button mat-icon-button [matMenuTriggerFor]="notificationMenu"
+      <button mat-icon-button 
+              [matMenuTriggerFor]="notificationMenu"
               [matBadge]="invitationCount" 
               [matBadgeHidden]="invitationCount === 0"
               matBadgeColor="accent"
               matBadgeSize="small"
               matBadgePosition="above after"
-              aria-label="Notifications">
+              aria-label="Notifications"
+              class="notification-button">
         <mat-icon>notifications</mat-icon>
       </button>
       
-      <mat-menu #notificationMenu="matMenu">
+      <mat-menu #notificationMenu="matMenu" class="custom-menu notification-menu">
         <div class="menu-header">
-          <h3>Invitations ({{invitationCount}})</h3>
+          <h3>Invitations</h3>
+          <span class="badge" *ngIf="invitationCount > 0">{{ invitationCount }}</span>
         </div>
+        
+        <mat-divider></mat-divider>
         
         <div *ngIf="pendingInvitations.length === 0" class="menu-empty">
           <mat-icon>notifications_none</mat-icon>
@@ -43,29 +48,57 @@
         <ng-container *ngIf="pendingInvitations.length > 0">
           <button *ngFor="let invitation of pendingInvitations" 
                   mat-menu-item 
-                  (click)="navigateToInvitation(invitation.token, $event)">
-            <mat-icon>group_add</mat-icon>
-            <span>
-              Join <strong>{{ invitation.activityName }}</strong>
-              <small>Invited by {{ invitation.invitedBy }}</small>
-            </span>
+                  (click)="navigateToInvitation(invitation.token, $event)"
+                  class="invitation-item">
+            <div class="invitation-content">
+              <div class="invitation-icon">
+                <mat-icon>group_add</mat-icon>
+              </div>
+              <div class="invitation-details">
+                <div class="invitation-title">Join <strong>{{ invitation.activityName }}</strong></div>
+                <div class="invitation-subtitle">Invited by {{ invitation.invitedBy }}</div>
+              </div>
+            </div>
           </button>
         </ng-container>
       </mat-menu>
     </div>
     
     <div class="user-section" *ngIf="currentUser">
-      <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
-        <span class="username">{{ currentUser.username }}</span>
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
+      <div class="user-menu-container">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="avatar-button">
+          <div class="user-avatar">{{ currentUser.username.charAt(0) }}</div>
         </button>
-        <button mat-menu-item (click)="logout()">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="username-button">
+          <span class="username">{{ currentUser.username }}</span>
+          <!-- <mat-icon>arrow_drop_down</mat-icon> -->
+        </button>
+      </div>
+      
+      <mat-menu #userMenu="matMenu" class="custom-menu user-menu">
+        <div class="menu-user-header">
+          <div class="user-avatar large">{{ currentUser.username.charAt(0) }}</div>
+          <div class="user-info">
+            <div class="user-name">{{ currentUser.username }}</div>
+            <div class="user-email">{{ currentUser.email }}</div>
+          </div>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <button mat-menu-item routerLink="/profile" class="menu-item">
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+        
+        <button mat-menu-item routerLink="/activities" class="menu-item">
+          <mat-icon>apps</mat-icon>
+          <span>My Activities</span>
+        </button>
+        
+        <mat-divider></mat-divider>
+        
+        <button mat-menu-item (click)="logout()" class="menu-item logout-item">
           <mat-icon>exit_to_app</mat-icon>
           <span>Logout</span>
         </button>

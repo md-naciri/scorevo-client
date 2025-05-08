@@ -8,7 +8,9 @@ $alert-color: #B91C1C;     // Burgundy
 .header-toolbar {
   background-color: $primary-color !important;
   color: white !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 0;
+  height: 64px;
 }
 
 .header-container {
@@ -17,6 +19,8 @@ $alert-color: #B91C1C;     // Burgundy
   margin: 0 auto;
   display: flex;
   align-items: center;
+  height: 100%;
+  padding: 0 16px;
 }
 
 .logo-section {
@@ -34,12 +38,6 @@ $alert-color: #B91C1C;     // Burgundy
     height: 55px;
     margin-right: 12px;
   }
-  
-  .app-name {
-    font-size: 1.3rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
 }
 
 .nav-links {
@@ -48,11 +46,29 @@ $alert-color: #B91C1C;     // Burgundy
   
   a {
     margin-right: 8px;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
+    opacity: 0.85;
+    transition: all 0.2s ease;
+    border-radius: 4px;
     
     &:hover {
       opacity: 1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    &.active-link {
+      opacity: 1;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        width: 80%;
+        height: 3px;
+        background-color: $accent-color;
+        border-radius: 3px 3px 0 0;
+      }
     }
     
     mat-icon {
@@ -65,63 +81,272 @@ $alert-color: #B91C1C;     // Burgundy
   flex: 1 1 auto;
 }
 
+// User section styles
 .user-section {
-  .user-menu-button {
+  .user-menu-container {
     display: flex;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    overflow: hidden;
+    height: 36px;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+  
+  .avatar-button {
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    padding: 0;
+    min-width: 36px;
+    border-radius: 50%;
+    
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: $accent-color;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+  
+  .username-button {
+    padding: 0 8px 0 4px;
+    min-width: 0;
+    border-radius: 0 28px 28px 0;
+    background: transparent;
     
     .username {
-      margin-right: 8px;
+      margin-right: 4px;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    @media (max-width: 600px) {
+      display: none;
     }
   }
 }
 
-// Custom styling for the menu items
-::ng-deep .mat-mdc-menu-panel {
-  .mat-mdc-menu-item {
-    &:hover {
-      background-color: rgba($accent-color, 0.1) !important;
+// Notification section
+.notifications-section {
+  margin-right: 12px;
+  
+  .notification-button {
+    position: relative;
+  }
+}
 
-      .mat-icon {
-        color: $accent-color !important;
+// Custom menu overrides
+::ng-deep {
+  .custom-menu {
+    // Override Material's default background
+    .mat-mdc-menu-content {
+      padding: 0 !important;
+      background: white !important;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .mat-mdc-menu-panel {
+      background: white !important;
+      border-radius: 8px !important;
+      overflow: hidden;
+      min-width: 260px !important;
+      max-width: 320px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+  
+  // Notification menu specific styles
+  .notification-menu {
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background-color: white;
+      
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: $primary-color;
       }
-
-      span {
-        color: $primary-color !important;
+      
+      .badge {
+        background-color: $accent-color;
+        color: white;
+        border-radius: 12px;
+        padding: 2px 8px;
+        font-size: 12px;
         font-weight: 500;
       }
     }
+    
+    .menu-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      color: $secondary-color;
+      
+      mat-icon {
+        font-size: 36px;
+        height: 36px;
+        width: 36px;
+        margin-bottom: 8px;
+        opacity: 0.7;
+      }
+      
+      span {
+        font-size: 14px;
+      }
+    }
+    
+    .invitation-item {
+      padding: 12px 16px;
+      height: auto;
+      min-height: 60px;
+      line-height: 1.4;
+      white-space: normal;
+      
+      &:hover {
+        background-color: rgba($accent-color, 0.08);
+      }
+      
+      .invitation-content {
+        display: flex;
+        width: 100%;
+      }
+      
+      .invitation-icon {
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        
+        mat-icon {
+          color: $accent-color;
+        }
+      }
+      
+      .invitation-details {
+        flex: 1;
+        
+        .invitation-title {
+          font-size: 14px;
+          color: $primary-color;
+          font-weight: 400;
+          
+          strong {
+            font-weight: 500;
+          }
+        }
+        
+        .invitation-subtitle {
+          font-size: 12px;
+          color: $secondary-color;
+          margin-top: 4px;
+        }
+      }
+    }
   }
-}
-
-// Style for highlighting active route
-.active-link {
-  opacity: 1 !important;
-  border-bottom: 2px solid $accent-color;
-}
-
-/* Add this style */
-
-.invitation-section {
-  margin-right: 16px;
-}
-
-.mat-badge-content {
-  font-weight: 600;
-  font-size: 12px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.notifications-section button {
-  position: relative;
-}
-
-::ng-deep .mat-badge-medium.mat-badge-above .mat-badge-content {
-  top: -5px;
-  right: -5px;
-}
-
-::ng-deep .mat-badge-accent .mat-badge-content {
-  background: #F59E0B;
-  color: white;
+  
+  // User menu specific styles
+  .user-menu {
+    .menu-user-header {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background-color: white;
+      
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $accent-color;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 18px;
+        margin-right: 12px;
+        
+        &.large {
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+        }
+      }
+      
+      .user-info {
+        .user-name {
+          font-size: 16px;
+          font-weight: 500;
+          color: $primary-color;
+        }
+        
+        .user-email {
+          font-size: 12px;
+          color: $secondary-color;
+          margin-top: 4px;
+        }
+      }
+    }
+    
+    .menu-item {
+      padding: 0 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      
+      &:hover {
+        background-color: rgba($primary-color, 0.05);
+      }
+      
+      &.logout-item {
+        color: $alert-color;
+        
+        mat-icon {
+          color: $alert-color;
+        }
+        
+        &:hover {
+          background-color: rgba($alert-color, 0.05);
+        }
+      }
+      
+      mat-icon {
+        margin-right: 12px;
+        color: $secondary-color;
+      }
+      
+      span {
+        font-size: 14px;
+        color: $primary-color;
+      }
+    }
+  }
+  
+  // Badge styling
+  .mat-badge-medium.mat-badge-above .mat-badge-content {
+    top: -5px;
+    right: -5px;
+  }
+  
+  .mat-badge-accent .mat-badge-content {
+    background: $accent-color;
+    color: white;
+  }
 }
