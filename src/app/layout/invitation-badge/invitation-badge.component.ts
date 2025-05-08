@@ -21,7 +21,7 @@ import { switchMap } from 'rxjs/operators';
     MatButtonModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    RouterLink
+    // RouterLink
   ],
   templateUrl: './invitation-badge.component.html',
   styleUrls: ['./invitation-badge.component.scss']

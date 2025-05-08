@@ -45,7 +45,7 @@
           <span>No pending invitations</span>
         </div>
         
-        <ng-container *ngIf="pendingInvitations.length > 0">
+        <!-- <ng-container *ngIf="pendingInvitations.length > 0">
           <button *ngFor="let invitation of pendingInvitations" 
                   mat-menu-item 
                   (click)="navigateToInvitation(invitation.token, $event)"
@@ -60,6 +60,24 @@
               </div>
             </div>
           </button>
+        </ng-container> -->
+        <div *ngIf="pendingInvitations.length === 0" class="menu-empty">
+          <mat-icon>notifications_none</mat-icon>
+          <span>No pending invitations</span>
+        </div>
+        
+        <ng-container *ngIf="pendingInvitations.length > 0">
+          <div *ngFor="let invitation of pendingInvitations" class="invitation-item">
+            <button mat-menu-item (click)="navigateToInvitation(invitation.token, $event)">
+              <div class="invitation-icon">
+                <mat-icon>group_add</mat-icon>
+              </div>
+              <div class="invitation-details">
+                <div class="invitation-title">Join <strong>{{ invitation.activityName }}</strong></div>
+                <div class="invitation-subtitle">Invited by {{ invitation.invitedBy }}</div>
+              </div>
+            </button>
+          </div>
         </ng-container>
       </mat-menu>
     </div>
